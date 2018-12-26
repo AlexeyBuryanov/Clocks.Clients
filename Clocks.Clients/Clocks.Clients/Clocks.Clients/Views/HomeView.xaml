@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    x:Name="Self"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="clr-namespace:Clocks.Clients.Core.Behaviors;assembly=Clocks.Clients.Core"
+    xmlns:markupExtensions="clr-namespace:Clocks.Clients.Core.MarkupExtensions;assembly=Clocks.Clients.Core"
+    xmlns:templates="clr-namespace:Clocks.Clients.Core.Views.Templates;assembly=Clocks.Clients.Core"
+    xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    x:Class="Clocks.Clients.Core.Views.HomeView"
+    Title="{Binding Title}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style 
+                x:Key="NoClocksTextStyle" 
+                TargetType="Label"
+                BasedOn="{StaticResource FiraSansRegularLabelStyle}">
+                <Setter Property="TextColor" Value="{StaticResource WhiteColor}" />
+                <Setter Property="FontSize" Value="{StaticResource BigSize}" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem  
+            Text="{markupExtensions:Translate AddClock}"
+            Command="{Binding AddClockCommand}">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="Android, iOS" Value="ic_addclock" />
+                    <On Platform="UWP" Value="Assets/ic_addclock.png" />
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <Grid 
+            RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid 
+                Grid.Row="1">
+                <Image 
+                    Aspect="AspectFill">
+                    <Image.Source>
+                        <OnPlatform x:TypeArguments="ImageSource">
+                            <On Platform="Android, iOS" Value="img_header_background_1" />
+                            <On Platform="UWP" Value="Assets/img_header_background_2.png" />
+                        </OnPlatform>
+                    </Image.Source>
+                </Image>
+
+                <Grid>
+                    <Label   
+                        IsVisible="{Binding HasItems, Converter={StaticResource InverseBoolConverter}}"
+                        Text="{markupExtensions:Translate NoClocks}"
+                        Style="{StaticResource NoClocksTextStyle}"/>
+
+                    <ListView
+                        x:Name="ClocksListView"
+                        BackgroundColor="Transparent"
+                        RowHeight="190"
+                        SeparatorVisibility="None"
+                        CachingStrategy="RecycleElement"
+                        ItemsSource="{Binding ClocksList}"
+                        behaviors:ItemTappedCommandListView.ItemTappedCommand="{Binding ClocksListItemSelectedCommand}">
+                        <ListView.Header>
+                            <BoxView>
+                                <BoxView.HeightRequest>
+                                    <OnPlatform x:TypeArguments="x:Double">
+                                        <On Platform="Android, iOS" Value="60" />
+                                    </OnPlatform>
+                                </BoxView.HeightRequest>
+                            </BoxView>
+                        </ListView.Header>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <templates:ClockItemTemplate 
+                                        DeleteCommand="{Binding BindingContext.DeleteClockCommand, Source={x:Reference Self}}"/>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </Grid>
+
+            <ActivityIndicator
+                Grid.Row="1" 
+                Color="{StaticResource AccentColor}"
+                IsRunning="{Binding IsBusy}" 
+                IsVisible="{Binding IsBusy}" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Clocks.Clients.Core.Views.Templates.ClockItemTemplate"
+    xmlns:analogClock="clr-namespace:Clocks.Clients.Core.Controls.AnalogClock;assembly=Clocks.Clients.Core">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <Style 
+                x:Key="ClockCityStyle" 
+                TargetType="Label"
+                BasedOn="{StaticResource FiraSansRegularLabelStyle}">
+                <Setter Property="TextColor" Value="{StaticResource BlackTextColor}" />
+                <Setter Property="FontSize" Value="{StaticResource BigSize}" />
+            </Style>
+
+            <Style 
+                x:Key="ClockDescriptionStyle" 
+                TargetType="Label"
+                BasedOn="{StaticResource ClockCityStyle}">
+                <Setter Property="TextColor" Value="#959BA1" />
+                <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
+            </Style>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <ContentView.Content>
+        <Grid
+            Margin="12"
+            BackgroundColor="{StaticResource WhiteColor}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Grid 
+                Grid.Column="0"
+                Padding="8"
+                ColumnSpacing="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <analogClock:ClockView
+                    Grid.Column="0"
+                    Grid.RowSpan="2"
+                    HeightRequest="150"
+                    WidthRequest="150"
+                    VerticalOptions="Start"
+                    HourArrowColor="{Binding HourArrowColor}"
+                    MinuteArrowColor="{Binding MinuteArrowColor}"
+                    SecondArrowColor="{Binding SecondArrowColor}"
+                    TickMarksColor="{Binding TickMarksColor}"
+                    OffsetTime="{Binding City.Offset}">
+                </analogClock:ClockView>
+                <Label 
+                    Grid.Column="1"
+                    Grid.Row="0"
+                    Text="{Binding City.Name}"
+                    Style="{StaticResource ClockCityStyle}"
+                    LineBreakMode="WordWrap" />
+                <Label 
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    Text="{Binding Description}"
+                    Style="{StaticResource ClockDescriptionStyle}"/>
+            </Grid>
+
+            <Grid
+                x:Name="DeleteContainer"
+                Grid.Column="1"
+                VerticalOptions="Fill"
+                BackgroundColor="#F2F2F2">
+                <Image
+                    x:Name="DeleteImage"
+                    Aspect="AspectFit"
+                    VerticalOptions="Center"
+                    Margin="5">
+                    <Image.HeightRequest>
+                        <OnPlatform x:TypeArguments="x:Double">
+                            <On Platform="Android" Value="36" />
+                            <On Platform="UWP" Value="32" />
+                            <On Platform="iOS" Value="28" />
+                        </OnPlatform>
+                    </Image.HeightRequest>
+                    <Image.Source>
+                        <OnPlatform x:TypeArguments="ImageSource">
+                            <On Platform="Android, iOS" Value="ic_paperbin_red" />
+                            <On Platform="UWP" Value="Assets/ic_paperbin_red.png" />
+                        </OnPlatform>
+                    </Image.Source>
+                </Image>
+            </Grid>
+        </Grid>
+    </ContentView.Content>
+</ContentView>
