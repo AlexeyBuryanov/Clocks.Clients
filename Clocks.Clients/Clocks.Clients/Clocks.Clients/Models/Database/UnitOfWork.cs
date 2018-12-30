@@ -7,10 +7,9 @@ namespace Clocks.Clients.Core.Models.Database
 {
     internal class UnitOfWork : IDisposable
     {
-        // TODO: вместо DependencyService использовать Container.Resolve
         private static readonly ApplicationDbContext Context = 
             new ApplicationDbContext(DependencyService.Get<IPath>().GetDatabasePath(App.DBFILENAME));
-
+        
         private CityRepository _cityRepository;
         private ClockTypeRepository _clockTypeRepository;
         private ClockRepository _clockRepository;
