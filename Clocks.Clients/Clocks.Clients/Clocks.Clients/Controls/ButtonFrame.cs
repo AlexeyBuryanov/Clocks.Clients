@@ -32,10 +32,7 @@ namespace Clocks.Clients.Core.Controls
         /// </summary>
         private void ContentUpdated()
         {
-            if (Device.RuntimePlatform != Device.UWP)
-            {
-                BackgroundColor = Content.BackgroundColor;
-            }
+            BackgroundColor = Content.BackgroundColor;
         }
     }
 }
