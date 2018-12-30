@@ -1,10 +1,11 @@
-﻿using System.Windows.Input;
+﻿using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Clocks.Clients.Core.Views.Templates
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
+	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ClockItemTemplate
 	{
 		public static readonly BindableProperty DeleteCommandProperty =
@@ -19,16 +20,34 @@ namespace Clocks.Clients.Core.Views.Templates
 			set => SetValue(DeleteCommandProperty, value);
 		}
 
+		public static readonly BindableProperty ItemTappedCommandProperty =
+			BindableProperty.Create(
+				"ItemTappedCommand",
+				typeof(ICommand),
+				typeof(ClockItemTemplate),
+				default(ICommand));
+
+		public ICommand ItemTappedCommand {
+			get => (ICommand)GetValue(ItemTappedCommandProperty);
+			set => SetValue(ItemTappedCommandProperty, value);
+		}
+
 		public ClockItemTemplate()
 		{
 			InitializeComponent();
 
-			var tapGesture = new TapGestureRecognizer
+			var tapGestureItemTapped = new TapGestureRecognizer
+			{
+				Command = new Command(() => ItemTappedCommand?.Execute(BindingContext))
+			};
+			ItemContainer.GestureRecognizers.Add(tapGestureItemTapped);
+
+			var tapGestureDelete = new TapGestureRecognizer
 			{
 				Command = new Command(OnDeleteTapped)
 			};
+			DeleteContainer.GestureRecognizers.Add(tapGestureDelete);
 
-			DeleteContainer.GestureRecognizers.Add(tapGesture);
 			InitializeCell();
 		}
 

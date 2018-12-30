@@ -26,6 +26,7 @@
 
     <ContentView.Content>
         <Grid
+            x:Name="ItemContainer"
             Margin="12"
             BackgroundColor="{StaticResource WhiteColor}">
             <Grid.ColumnDefinitions>
@@ -38,19 +39,20 @@
                 Padding="8"
                 ColumnSpacing="5">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
                 <analogClock:ClockView
                     Grid.Column="0"
-                    Grid.RowSpan="2"
+                    MinimumHeightRequest="150"
                     HeightRequest="150"
+                    MinimumWidthRequest="150"
                     WidthRequest="150"
+                    HorizontalOptions="Start"
                     VerticalOptions="Start"
                     HourArrowColor="{Binding HourArrowColor}"
                     MinuteArrowColor="{Binding MinuteArrowColor}"
@@ -58,17 +60,19 @@
                     TickMarksColor="{Binding TickMarksColor}"
                     OffsetTime="{Binding City.Offset}">
                 </analogClock:ClockView>
-                <Label 
+                <StackLayout 
                     Grid.Column="1"
-                    Grid.Row="0"
-                    Text="{Binding City.Name}"
-                    Style="{StaticResource ClockCityStyle}"
-                    LineBreakMode="WordWrap" />
-                <Label 
-                    Grid.Column="1"
-                    Grid.Row="1"
-                    Text="{Binding Description}"
-                    Style="{StaticResource ClockDescriptionStyle}"/>
+                    Orientation="Vertical"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Start">
+                    <Label
+                        Text="{Binding City.Name}"
+                        Style="{StaticResource ClockCityStyle}"
+                        LineBreakMode="WordWrap" />
+                    <Label
+                        Text="{Binding Description}"
+                        Style="{StaticResource ClockDescriptionStyle}"/>
+                </StackLayout>
             </Grid>
 
             <Grid
