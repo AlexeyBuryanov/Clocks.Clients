@@ -3,7 +3,6 @@
     x:Name="Self"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:behaviors="clr-namespace:Clocks.Clients.Core.Behaviors;assembly=Clocks.Clients.Core"
     xmlns:markupExtensions="clr-namespace:Clocks.Clients.Core.MarkupExtensions;assembly=Clocks.Clients.Core"
     xmlns:templates="clr-namespace:Clocks.Clients.Core.Views.Templates;assembly=Clocks.Clients.Core"
     xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
@@ -64,14 +63,14 @@
                         Text="{markupExtensions:Translate NoClocks}"
                         Style="{StaticResource NoClocksTextStyle}"/>
 
+                    <!--behaviors:ItemTappedCommandListView.ItemTappedCommand="{Binding ClocksListItemSelectedCommand}"-->
                     <ListView
                         x:Name="ClocksListView"
                         BackgroundColor="Transparent"
                         RowHeight="190"
                         SeparatorVisibility="None"
                         CachingStrategy="RecycleElement"
-                        ItemsSource="{Binding ClocksList}"
-                        behaviors:ItemTappedCommandListView.ItemTappedCommand="{Binding ClocksListItemSelectedCommand}">
+                        ItemsSource="{Binding ClocksList}">
                         <ListView.Header>
                             <BoxView>
                                 <BoxView.HeightRequest>
@@ -85,7 +84,8 @@
                             <DataTemplate>
                                 <ViewCell>
                                     <templates:ClockItemTemplate 
-                                        DeleteCommand="{Binding BindingContext.DeleteClockCommand, Source={x:Reference Self}}"/>
+                                        DeleteCommand="{Binding BindingContext.DeleteClockCommand, Source={x:Reference Self}}"
+                                        ItemTappedCommand="{Binding BindingContext.ClocksListItemSelectedCommand, Source={x:Reference Self}}"/>
                                 </ViewCell>
                             </DataTemplate>
                         </ListView.ItemTemplate>
