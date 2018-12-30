@@ -1,4 +1,6 @@
 ﻿using Clocks.Clients.Core;
+using Clocks.Clients.Core.Models.Database;
+using Clocks.Clients.iOS.Database;
 using Foundation;
 using Prism;
 using Prism.Ioc;
@@ -32,7 +34,7 @@ namespace Clocks.Clients.iOS
     {
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            // Register any platform specific implementations
+            containerRegistry.RegisterSingleton(typeof(IPath), typeof(IosDbPath));
         }
     }
 }
