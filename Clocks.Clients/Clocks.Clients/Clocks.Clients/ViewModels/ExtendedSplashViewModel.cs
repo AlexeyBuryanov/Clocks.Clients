@@ -2,7 +2,7 @@
 
 namespace Clocks.Clients.Core.ViewModels
 {
-    public class ExtendedSplashViewModel : ViewModelBase
+	public class ExtendedSplashViewModel : ViewModelBase
 	{
 		public ExtendedSplashViewModel()
 		{
