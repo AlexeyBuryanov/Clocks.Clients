@@ -1,4 +1,6 @@
-﻿using Prism;
+﻿using Clocks.Clients.Core.Models.Database;
+using Clocks.Clients.UWP.Database;
+using Prism;
 using Prism.Ioc;
 using CoreApp = Clocks.Clients.Core.App;
 
@@ -10,6 +12,9 @@ namespace Clocks.Clients.UWP
         {
             InitializeComponent();
 
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
+            Rg.Plugins.Popup.Popup.Init();
+
             LoadApplication(new CoreApp(new UwpInitializer()));
         }
     }
@@ -18,7 +23,7 @@ namespace Clocks.Clients.UWP
     {
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            // Register any platform specific implementations
+            containerRegistry.RegisterSingleton(typeof(IPath), typeof(UwpDbPath));
         }
     }
 }
