@@ -1,4 +1,8 @@
-﻿using System;
+﻿using FFImageLoading.Forms;
+using FFImageLoading.Forms.Platform;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
@@ -8,13 +12,13 @@ using Windows.UI.Xaml.Navigation;
 namespace Clocks.Clients.UWP
 {
     /// <summary>
-    /// Provides application-specific behavior to supplement the default Application class.
+    /// Предоставляет поведение приложения для дополнения класса приложения по умолчанию.
     /// </summary>
-    sealed partial class App : Application
+    public sealed partial class App
     {
         /// <summary>
-        /// Initializes the singleton application object.  This is the first line of authored code
-        /// executed, and as such is the logical equivalent of main() or WinMain().
+        /// Инициализирует объект приложения singleton. Это первая строка исполняемого кода,
+        /// и как таковой логический эквивалент main() или WinMain().
         /// </summary>
         public App()
         {
@@ -23,68 +27,76 @@ namespace Clocks.Clients.UWP
         }
 
         /// <summary>
-        /// Invoked when the application is launched normally by the end user.  Other entry points
-        /// will be used such as when the application is launched to open a specific file.
+        /// Вызывается, когда приложение запускается обычно конечным пользователем.
+        /// Другие точки входа будут использоваться, например, при запуске приложения
+        /// для открытия определенного файла.
         /// </summary>
-        /// <param name="e">Details about the launch request and process.</param>
+        /// <param name="e">Подробная информация о запросе и процессе запуска.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-
-
-            Frame rootFrame = Window.Current.Content as Frame;
-
-            // Do not repeat app initialization when the Window already has content,
-            // just ensure that the window is active
-            if (rootFrame == null)
+#if DEBUG
+            if (System.Diagnostics.Debugger.IsAttached)
             {
-                // Create a Frame to act as the navigation context and navigate to the first page
+                DebugSettings.EnableFrameRateCounter = true;
+            }
+#endif
+
+            // Не повторяйте инициализацию приложения, когда в Окне уже есть контент, просто убедитесь, что окно активно
+            if (!(Window.Current.Content is Frame rootFrame))
+            {
+                // Создаём фрейм, чтобы действовать как контекст навигации и перейти к первой странице
                 rootFrame = new Frame();
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
-                Xamarin.Forms.Forms.Init(e);
+                var assembliesToInclude = new List<Assembly>
+                {
+                    typeof(CachedImage).GetTypeInfo().Assembly,
+                    typeof(CachedImageRenderer).GetTypeInfo().Assembly,
+                };
+
+                Xamarin.Forms.Forms.Init(e, assembliesToInclude);
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
-                    //TODO: Load state from previously suspended application
+                    // TODO: Состояние загрузки из ранее приостановленного приложения
                 }
 
-                // Place the frame in the current Window
+                // Помещаем фрейм в текущее окно
                 Window.Current.Content = rootFrame;
             }
 
             if (rootFrame.Content == null)
             {
-                // When the navigation stack isn't restored navigate to the first page,
-                // configuring the new page by passing required information as a navigation
-                // parameter
+                // Когда стек навигации не восстанавливается, переходим на первую страницу,
+                // настроив новую страницу, передав необходимую информацию в качестве параметра навигации
                 rootFrame.Navigate(typeof(MainPage), e.Arguments);
             }
-            // Ensure the current window is active
+
+            // Убедитесь, что текущее окно активно
             Window.Current.Activate();
         }
 
         /// <summary>
-        /// Invoked when Navigation to a certain page fails
+        /// Вызывается при ошибочной навигации
         /// </summary>
-        /// <param name="sender">The Frame which failed navigation</param>
-        /// <param name="e">Details about the navigation failure</param>
-        void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
+        /// <param name="sender">Frame, который не прошел навигацию</param>
+        /// <param name="e">Подробная информация о сбое в навигации</param>
+        private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
-            throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
+            throw new Exception("Не удалось загрузить страницу " + e.SourcePageType.FullName);
         }
 
         /// <summary>
-        /// Invoked when application execution is being suspended.  Application state is saved
-        /// without knowing whether the application will be terminated or resumed with the contents
-        /// of memory still intact.
+        /// Вызывается, когда выполнение приложения приостанавливается. Состояние приложения сохраняется,
+        /// не зная, будет ли приложение завершено или возобновлено с сохранением сохраненной памяти.
         /// </summary>
-        /// <param name="sender">The source of the suspend request.</param>
-        /// <param name="e">Details about the suspend request.</param>
+        /// <param name="sender">Источник запроса на приостановку.</param>
+        /// <param name="e">Подробная информация о запросе на приостановку.</param>
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
-            //TODO: Save application state and stop any background activity
+            // TODO: Сохранить состояние приложения и остановить любую фоновую активность
             deferral.Complete();
         }
     }
