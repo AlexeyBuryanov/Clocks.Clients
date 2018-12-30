@@ -6,7 +6,7 @@ namespace Clocks.Clients.Core.ViewModels.Base
     /// <summary>
     /// Базовая модель представления
     /// </summary>
-    public class ViewModelBase : BindableBase, INavigationAware, IDestructible
+    public class ViewModelBase : BindableBase, INavigationAware, IDestructible, IConfirmNavigation
     {
         /// <summary>
         /// Занят или нет
@@ -30,5 +30,6 @@ namespace Clocks.Clients.Core.ViewModels.Base
         public virtual void OnNavigatedTo(INavigationParameters parameters) { }
         public virtual void OnNavigatingTo(INavigationParameters parameters) { }
         public virtual void Destroy() { }
+        public virtual bool CanNavigate(INavigationParameters parameters) { return true; }
     }
 }
