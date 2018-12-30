@@ -1,7 +1,7 @@
-﻿using Clocks.Clients.iOS.Database;
+﻿using Clocks.Clients.Core.Models.Database;
+using Clocks.Clients.iOS.Database;
 using System;
 using System.IO;
-using Clocks.Clients.Core.Models.Database;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(IosDbPath))]
