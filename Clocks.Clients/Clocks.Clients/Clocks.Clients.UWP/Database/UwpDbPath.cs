@@ -1,7 +1,7 @@
-﻿using Clocks.Clients.UWP.Database;
+﻿using Clocks.Clients.Core.Models.Database;
+using Clocks.Clients.UWP.Database;
 using System.IO;
 using Windows.Storage;
-using Clocks.Clients.Core.Models.Database;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(UwpDbPath))]
