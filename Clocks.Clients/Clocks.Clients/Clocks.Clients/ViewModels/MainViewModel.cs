@@ -17,7 +17,7 @@ using MenuItem = Clocks.Clients.Core.Models.MenuItem;
 
 namespace Clocks.Clients.Core.ViewModels
 {
-    public class MainViewModel : ViewModelBase
+	public class MainViewModel : ViewModelBase
 	{
 		/// <summary>
 		/// Служба навигации
@@ -138,8 +138,7 @@ namespace Clocks.Clients.Core.ViewModels
 				}
 				else
 				{
-					await _navigationService.NavigateAsync(
-						new Uri($"/MainView/NavigationPage/{item.ViewType.Name}", UriKind.Absolute));
+					await _navigationService.NavigateAsync($"/MainView/NavigationPage/{item.ViewType.Name}");
 				}
 			}
 		}
