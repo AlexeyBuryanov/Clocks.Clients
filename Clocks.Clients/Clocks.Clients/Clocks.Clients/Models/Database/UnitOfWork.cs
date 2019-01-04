@@ -5,25 +5,38 @@ using Xamarin.Forms;
 
 namespace Clocks.Clients.Core.Models.Database
 {
-    internal class UnitOfWork : IDisposable
+    public class UnitOfWork : IUnitOfWork
     {
-        private static readonly ApplicationDbContext Context = 
-            new ApplicationDbContext(DependencyService.Get<IPath>().GetDatabasePath(App.DBFILENAME));
-        
-        private CityRepository _cityRepository;
-        private ClockTypeRepository _clockTypeRepository;
-        private ClockRepository _clockRepository;
+        private static readonly Lazy<UnitOfWork> Lazy =
+            new Lazy<UnitOfWork>(() => new UnitOfWork(new ApplicationDbContext(DependencyService.Get<IPath>().GetDatabasePath(App.DBFILENAME))));
 
-        public CityRepository CityRepository 
-            => _cityRepository ?? (_cityRepository = new CityRepository(Context));
-        public ClockTypeRepository ClockTypeRepository 
-            => _clockTypeRepository ?? (_clockTypeRepository = new ClockTypeRepository(Context));
-        public ClockRepository ClockRepository 
-            => _clockRepository ?? (_clockRepository = new ClockRepository(Context));
+        private readonly ApplicationDbContext _applicationDbContext;
 
-        public int Save() => Context.SaveChanges();
-        public async Task<int> SaveAsync() => await Context.SaveChangesAsync();
-        public async Task EnsureCreatedAsync() => await Context.Database.EnsureCreatedAsync();
+        private UnitOfWork(ApplicationDbContext applicationDbContext)
+        {
+            _applicationDbContext = applicationDbContext;
+            Cities = new CityRepository(_applicationDbContext);
+            ClockTypes = new ClockTypeRepository(_applicationDbContext);
+            Clocks = new ClockRepository(_applicationDbContext);
+        }
+
+        public static UnitOfWork Instance => Lazy.Value;
+
+
+        public ICityRepository Cities { get; }
+        public IClockTypeRepository ClockTypes { get; }
+        public IClockRepository Clocks { get; }
+
+
+        public int SaveChanges() 
+            => _applicationDbContext.SaveChanges();
+
+        public Task<int> SaveChangesAsync() 
+            => _applicationDbContext.SaveChangesAsync();
+
+        public async Task EnsureCreatedAsync() 
+            => await _applicationDbContext.Database.EnsureCreatedAsync();
+
 
         private bool _disposed = false;
         public virtual void Dispose(bool disposing)
@@ -32,7 +45,7 @@ namespace Clocks.Clients.Core.Models.Database
             {
                 if (disposing)
                 {
-                    Context.Dispose();
+                    _applicationDbContext.Dispose();
                 }
                 _disposed = true;
             }
