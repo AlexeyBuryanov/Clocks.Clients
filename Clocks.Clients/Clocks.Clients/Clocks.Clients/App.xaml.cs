@@ -58,25 +58,25 @@ namespace Clocks.Clients.Core
 
         private async Task InitializeDatabaseAsync()
         {
-            _uow = new UnitOfWork();
+            _uow = UnitOfWork.Instance;
 
             // Создаем бд, если она отсутствует
             await _uow.EnsureCreatedAsync();
 
             // Заполняем данными
-            var isAnyCities = await _uow.CityRepository.AnyAsync();
+            var isAnyCities = await _uow.Cities.AnyAsync();
             if (!isAnyCities)
             {
                 await FillCitiesAsync();
             }
 
-            var isAnyTypeClock = await _uow.ClockTypeRepository.AnyAsync();
+            var isAnyTypeClock = await _uow.ClockTypes.AnyAsync();
             if (!isAnyTypeClock)
             {
                 await FillTypeClockAsync();
             }
 
-            var isAnyClocks = await _uow.ClockRepository.AnyAsync();
+            var isAnyClocks = await _uow.Clocks.AnyAsync();
             if (!isAnyClocks)
             {
                 await FillClockAsync();
@@ -86,29 +86,29 @@ namespace Clocks.Clients.Core
         private async Task FillTypeClockAsync()
         {
             await Task.WhenAll(
-                _uow.ClockTypeRepository.AddAsync(new ClockType { ClockTypeId = 1, Name = "Аналоговые" }),
-                _uow.ClockTypeRepository.AddAsync(new ClockType { ClockTypeId = 2, Name = "Песочные" }),
-                _uow.ClockTypeRepository.AddAsync(new ClockType { ClockTypeId = 3, Name = "С погодой" }),
-                _uow.SaveAsync()
+                _uow.ClockTypes.AddAsync(new ClockType { ClockTypeId = 1, Name = "Аналоговые" }),
+                _uow.ClockTypes.AddAsync(new ClockType { ClockTypeId = 2, Name = "Песочные" }),
+                _uow.ClockTypes.AddAsync(new ClockType { ClockTypeId = 3, Name = "С погодой" }),
+                _uow.SaveChangesAsync()
             );
         }
 
         private async Task FillCitiesAsync()
         {
             await Task.WhenAll(
-                _uow.CityRepository.AddAsync(new City { CityId = 1, Name = "Киев", Offset = 2 }),
-                _uow.CityRepository.AddAsync(new City { CityId = 2, Name = "Москва", Offset = 3 }),
-                _uow.CityRepository.AddAsync(new City { CityId = 3, Name = "Гавайи", Offset = -10 }),
-                _uow.CityRepository.AddAsync(new City { CityId = 4, Name = "Аляска", Offset = -9 }),
-                _uow.CityRepository.AddAsync(new City { CityId = 5, Name = "Соломоновы Острова", Offset = 11 }),
-                _uow.CityRepository.AddAsync(new City { CityId = 6, Name = "Фиджи", Offset = 12 }),
-                _uow.CityRepository.AddAsync(new City { CityId = 7, Name = "Лос-Анджелес", Offset = -8 }),
-                _uow.CityRepository.AddAsync(new City { CityId = 8, Name = "Нью-Йорк", Offset = -5 }),
-                _uow.CityRepository.AddAsync(new City { CityId = 9, Name = "Лондон", Offset = 0 }),
-                _uow.CityRepository.AddAsync(new City { CityId = 10, Name = "Париж", Offset = 1 }),
-                _uow.CityRepository.AddAsync(new City { CityId = 11, Name = "Пекин", Offset = 8 }),
-                _uow.CityRepository.AddAsync(new City { CityId = 12, Name = "Токио", Offset = 9 }),
-                _uow.SaveAsync()
+                _uow.Cities.AddAsync(new City { CityId = 1, Name = "Киев", Offset = 2 }),
+                _uow.Cities.AddAsync(new City { CityId = 2, Name = "Москва", Offset = 3 }),
+                _uow.Cities.AddAsync(new City { CityId = 3, Name = "Гавайи", Offset = -10 }),
+                _uow.Cities.AddAsync(new City { CityId = 4, Name = "Аляска", Offset = -9 }),
+                _uow.Cities.AddAsync(new City { CityId = 5, Name = "Соломоновы Острова", Offset = 11 }),
+                _uow.Cities.AddAsync(new City { CityId = 6, Name = "Фиджи", Offset = 12 }),
+                _uow.Cities.AddAsync(new City { CityId = 7, Name = "Лос-Анджелес", Offset = -8 }),
+                _uow.Cities.AddAsync(new City { CityId = 8, Name = "Нью-Йорк", Offset = -5 }),
+                _uow.Cities.AddAsync(new City { CityId = 9, Name = "Лондон", Offset = 0 }),
+                _uow.Cities.AddAsync(new City { CityId = 10, Name = "Париж", Offset = 1 }),
+                _uow.Cities.AddAsync(new City { CityId = 11, Name = "Пекин", Offset = 8 }),
+                _uow.Cities.AddAsync(new City { CityId = 12, Name = "Токио", Offset = 9 }),
+                _uow.SaveChangesAsync()
             );
         }
 
@@ -119,10 +119,10 @@ namespace Clocks.Clients.Core
             var darkRed = Color.DarkRed.ToHex();
 
             await Task.WhenAll(
-                _uow.ClockRepository.AddAsync(new Clock { ClockId = 1, HourArrowColorHex = black, MinuteArrowColorHex = gray, SecondArrowColorHex = darkRed, TickMarksColorHex = black, CityId = 1, ClockTypeId = 1 }),
-                _uow.ClockRepository.AddAsync(new Clock { ClockId = 2, HourArrowColorHex = black, MinuteArrowColorHex = gray, SecondArrowColorHex = darkRed, TickMarksColorHex = black, CityId = 2, ClockTypeId = 1 }),
-                _uow.ClockRepository.AddAsync(new Clock { ClockId = 3, HourArrowColorHex = black, MinuteArrowColorHex = gray, SecondArrowColorHex = darkRed, TickMarksColorHex = black, CityId = 3, ClockTypeId = 1 }),
-                _uow.SaveAsync()
+                _uow.Clocks.AddAsync(new Clock { ClockId = 1, HourArrowColorHex = black, MinuteArrowColorHex = gray, SecondArrowColorHex = darkRed, TickMarksColorHex = black, CityId = 1, ClockTypeId = 1 }),
+                _uow.Clocks.AddAsync(new Clock { ClockId = 2, HourArrowColorHex = black, MinuteArrowColorHex = gray, SecondArrowColorHex = darkRed, TickMarksColorHex = black, CityId = 2, ClockTypeId = 1 }),
+                _uow.Clocks.AddAsync(new Clock { ClockId = 3, HourArrowColorHex = black, MinuteArrowColorHex = gray, SecondArrowColorHex = darkRed, TickMarksColorHex = black, CityId = 3, ClockTypeId = 1 }),
+                _uow.SaveChangesAsync()
             );
         }
 
