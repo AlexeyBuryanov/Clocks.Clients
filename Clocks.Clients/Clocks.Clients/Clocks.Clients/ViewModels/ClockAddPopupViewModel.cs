@@ -78,7 +78,7 @@ namespace Clocks.Clients.Core.ViewModels
 			_minuteArrowColor = Color.Gray;
 			_hourArrowColor = Color.Black;
 
-			_unitOfWork = new UnitOfWork();
+			_unitOfWork = UnitOfWork.Instance;
 
 			GetCitiesFromDb();
 		}
@@ -87,7 +87,7 @@ namespace Clocks.Clients.Core.ViewModels
 		{
 			try
 			{
-				_cities = await _unitOfWork.CityRepository.GetAllAsync();
+				_cities = await _unitOfWork.Cities.GetAllAsync();
 				_cities.ForEach(city =>
 				{
 					CityList.Add(city.Name);

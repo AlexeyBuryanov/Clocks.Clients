@@ -61,7 +61,7 @@ namespace Clocks.Clients.Core.ViewModels
 
 			_selectedClock = new Clock();
 
-			_unitOfWork = new UnitOfWork();
+			_unitOfWork = UnitOfWork.Instance;
 
 			_timer = new Timer(TimeSpan.FromSeconds(1.0 / 60), UpdateDigitalTime, true);
 
@@ -73,14 +73,9 @@ namespace Clocks.Clients.Core.ViewModels
 			try
 			{
 				IsBusy = true;
-				var clocks = await _unitOfWork.ClockRepository.GetAllAsync();
+				var clocks = await _unitOfWork.Clocks.GetAllWithIncludesAsync();
 				if (_clocks.Count > 0) _clocks.Clear();
 				_clocks = clocks.ToObservableCollection();
-				// Фикс бага, когда на UWP первый элемент списка отображал маленькие часы
-				//var c = _clocks[0];
-				//var i = _clocks.IndexOf(c);
-				//_clocks.RemoveAt(i);
-				//_clocks.Insert(i, c);
 			}
 			catch (Exception e)
 			{
@@ -112,13 +107,6 @@ namespace Clocks.Clients.Core.ViewModels
 						{
 							clock.Description = DateTime.UtcNow.AddHours(clock.City.Offset).ToString("HH:mm:ss");
 						});
-
-					//ClocksList
-					//    .AsParallel()
-					//    .ForAll(clock =>
-					//    {
-					//        clock.Description = DateTime.UtcNow.AddHours(clock.City.Offset).ToString("HH:mm:ss");
-					//    });
 				}
 				catch (Exception e)
 				{
@@ -187,8 +175,8 @@ namespace Clocks.Clients.Core.ViewModels
 					}
 					else
 					{
-						await _unitOfWork.ClockRepository.DeleteAsync(clock.ClockId);
-						await _unitOfWork.SaveAsync();
+						await _unitOfWork.Clocks.DeleteAsync(clock);
+						await _unitOfWork.SaveChangesAsync();
 						_dialogService.ShowToast($"Часы с ID {clock.ClockId} успешно удалены");
 					}
 
@@ -224,8 +212,8 @@ namespace Clocks.Clients.Core.ViewModels
 				try
 				{
 					var addClock = parameters["newClock"] as Clock;
-					await _unitOfWork.ClockRepository.AddAsync(addClock);
-					await _unitOfWork.SaveAsync();
+					await _unitOfWork.Clocks.AddAsync(addClock);
+					await _unitOfWork.SaveChangesAsync();
 					_clocks.Add(addClock);
 					_dialogService.ShowToast("Добавлены новые часы");
 				}
@@ -258,8 +246,8 @@ namespace Clocks.Clients.Core.ViewModels
 					var editClock = parameters["editClock"] as Clock;
 					var index = _clocks.IndexOf(_selectedClock);
 					ClocksList[index] = editClock;
-					_unitOfWork.ClockRepository.Update(editClock);
-					await _unitOfWork.SaveAsync();
+					await _unitOfWork.Clocks.UpdateAsync(editClock);
+					await _unitOfWork.SaveChangesAsync();
 				}
 				catch (Exception e)
 				{

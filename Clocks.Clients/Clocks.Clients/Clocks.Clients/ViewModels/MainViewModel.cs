@@ -6,7 +6,6 @@ using Clocks.Clients.Core.ViewModels.Base;
 using Clocks.Clients.Core.Views;
 using Prism.Commands;
 using Prism.Navigation;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;

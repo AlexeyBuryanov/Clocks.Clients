@@ -82,7 +82,7 @@ namespace Clocks.Clients.Core.ViewModels
             _hourArrowColor = Color.Black;
 
             _selectedClock = new Clock();
-            _unitOfWork = new UnitOfWork();
+            _unitOfWork = UnitOfWork.Instance;
 
             GetCitiesFromDb();
         }
@@ -91,7 +91,7 @@ namespace Clocks.Clients.Core.ViewModels
         {
             try
             {
-                _cities = await _unitOfWork.CityRepository.GetAllAsync();
+                _cities = await _unitOfWork.Cities.GetAllAsync();
                 _cities.ForEach(city =>
                 {
                     CityList.Add(city.Name);
@@ -167,8 +167,8 @@ namespace Clocks.Clients.Core.ViewModels
             _clock.MinuteArrowColorHex = _minuteArrowColor.ToHex();
             _clock.HourArrowColor = _hourArrowColor;
             _clock.HourArrowColorHex = _hourArrowColor.ToHex();
-            _clock.ClockType = await _unitOfWork.ClockTypeRepository.GetAsync(_selectedClock.ClockTypeId);
-            var cities = await _unitOfWork.CityRepository.GetAllAsync();
+            _clock.ClockType = await _unitOfWork.ClockTypes.GetAsync(_selectedClock.ClockTypeId);
+            var cities = await _unitOfWork.Cities.GetAllAsync();
             cities.ForEach(city =>
             {
                 if (city.Name == _selectedCity)
