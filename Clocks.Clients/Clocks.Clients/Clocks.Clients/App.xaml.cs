@@ -3,7 +3,6 @@ using Clocks.Clients.Core.Models.Database;
 using Clocks.Clients.Core.Services.Analytic;
 using Clocks.Clients.Core.Services.Authentication;
 using Clocks.Clients.Core.Services.Dialog;
-using Clocks.Clients.Core.Services.File;
 using Clocks.Clients.Core.Services.OpenUri;
 using Clocks.Clients.Core.ViewModels;
 using Clocks.Clients.Core.Views;
@@ -143,7 +142,6 @@ namespace Clocks.Clients.Core
             containerRegistry.RegisterSingleton(typeof(IAvatarUrlProvider), typeof(GravatarUrlProvider));
             containerRegistry.RegisterSingleton(typeof(IBrowserCookiesService), typeof(DefaultBrowserCookiesService));
             containerRegistry.RegisterSingleton(typeof(IDialogService), typeof(DialogService));
-            containerRegistry.RegisterSingleton(typeof(IFileService), typeof(FileService));
             containerRegistry.RegisterSingleton(typeof(IOpenUriService), typeof(OpenUriService));
         }
     }

@@ -63,7 +63,6 @@
                         Text="{markupExtensions:Translate NoClocks}"
                         Style="{StaticResource NoClocksTextStyle}"/>
 
-                    <!--behaviors:ItemTappedCommandListView.ItemTappedCommand="{Binding ClocksListItemSelectedCommand}"-->
                     <ListView
                         x:Name="ClocksListView"
                         BackgroundColor="Transparent"
