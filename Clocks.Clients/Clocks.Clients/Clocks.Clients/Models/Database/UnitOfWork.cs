@@ -8,7 +8,9 @@ namespace Clocks.Clients.Core.Models.Database
     public class UnitOfWork : IUnitOfWork
     {
         private static readonly Lazy<UnitOfWork> Lazy =
-            new Lazy<UnitOfWork>(() => new UnitOfWork(new ApplicationDbContext(DependencyService.Get<IPath>().GetDatabasePath(App.DBFILENAME))));
+            new Lazy<UnitOfWork>(() => 
+                new UnitOfWork(new ApplicationDbContext(
+                    DependencyService.Get<IPath>().GetDatabasePath(App.DBFILENAME))));
 
         private readonly ApplicationDbContext _applicationDbContext;
 
@@ -38,7 +40,7 @@ namespace Clocks.Clients.Core.Models.Database
             => await _applicationDbContext.Database.EnsureCreatedAsync();
 
 
-        private bool _disposed = false;
+        private bool _disposed;
         public virtual void Dispose(bool disposing)
         {
             if (!_disposed)
