@@ -26,6 +26,7 @@
     <MtouchArch>i386, x86_64</MtouchArch>
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
+    <MtouchFloat32>false</MtouchFloat32>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -88,10 +89,54 @@
     <CodesignKey>iPhone Distribution</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
+    <AppExtensionDebugBundleId />
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Database\IosDbPath.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="Renderers\TransparentViewCell.cs" />
+    <Compile Include="Renderers\CustomNavigationRenderer.cs" />
+    <Compile Include="Renderers\ExtendedEntryRenderer.cs" />
+    <Compile Include="Services\Authentication\BrowserCookiesService.cs" />
+    <Compile Include="Services\DismissKeyboard\DismissKeyboardService.cs" />
+    <BundleResource Include="..\CommonResources\Fonts\firasans\FiraSans-Bold.ttf">
+      <Link>Resources\FiraSans-Bold.ttf</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="..\CommonResources\Fonts\firasans\FiraSans-Regular.ttf">
+      <Link>Resources\FiraSans-Regular.ttf</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="..\CommonResources\Fonts\firasans\FiraSans-SemiBold.ttf">
+      <Link>Resources\FiraSans-SemiBold.ttf</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="..\CommonResources\Fonts\roboto\Roboto-Bold.ttf">
+      <Link>Resources\Roboto-Bold.ttf</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="..\CommonResources\Fonts\roboto\Roboto-Light.ttf">
+      <Link>Resources\Roboto-Light.ttf</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="..\CommonResources\Fonts\roboto\Roboto-Medium.ttf">
+      <Link>Resources\Roboto-Medium.ttf</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="..\CommonResources\Fonts\roboto\Roboto-Regular.ttf">
+      <Link>Resources\Roboto-Regular.ttf</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="..\CommonResources\Fonts\roboto\Roboto-SemiBold.ttf">
+      <Link>Resources\Roboto-SemiBold.ttf</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </BundleResource>
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -210,7 +255,7 @@
       <Version>1.12.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite">
-      <Version>2.2.0</Version>
+      <Version>2.2.1</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.1</Version>
@@ -247,6 +292,66 @@
       <Project>{d876013b-ea02-4cdb-a498-e70b0b2d4a1f}</Project>
       <Name>Clocks.Clients</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_addclock%401x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_home.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_home%401x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_home%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_home%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_logout.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_logout%401x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_logout%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_paperbin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_paperbin%401x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_paperbin%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_paperbin%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_paperbin_red.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_paperbin_red%401x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_paperbin_red%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_paperbin_red%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\img_header_background_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\img_header_background_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_github.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\logo_splash.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Clocks.Clients.iOS")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Clocks")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Alexey Bur'yanov Incorporated")]
 [assembly: AssemblyProduct("Clocks.Clients.iOS")]
-[assembly: AssemblyCopyright("Copyright ©  2014")]
+[assembly: AssemblyCopyright("Copyright © Alexey Bur'yanov, 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
