@@ -31,96 +31,112 @@
 				x:Key="RobotoBold"
 				x:TypeArguments="x:String"
 				Android="Roboto-Bold.ttf#Roboto"
+                iOS="Roboto-Bold"
 				WinPhone="/Assets/Fonts/Roboto-Bold.ttf#Roboto"/>
 
 			<OnPlatform 
 				x:Key="RobotoLight"
 				x:TypeArguments="x:String"
 				Android="Roboto-Light.ttf#Roboto"
+                iOS="Roboto-Light"
 				WinPhone="/Assets/Fonts/Roboto-Light.ttf#Roboto" />
 
 			<OnPlatform 
 				x:Key="RobotoMedium"
 				x:TypeArguments="x:String"
 				Android="Roboto-Medium.ttf#Roboto"
+                iOS="Roboto-Medium"
 				WinPhone="/Assets/Fonts/Roboto-Medium.ttf#Roboto" />
 
 			<OnPlatform 
 				x:Key="RobotoRegular"
 				x:TypeArguments="x:String"
 				Android="Roboto-Regular.ttf#Roboto"
+                iOS="Roboto-Regular"
 				WinPhone="/Assets/Fonts/Roboto-Regular.ttf#Roboto"/>
 
 			<OnPlatform 
 				x:Key="RobotoSemiBold"
 				x:TypeArguments="x:String"
 				Android="Roboto-SemiBold.ttf#Roboto"
+                iOS="Roboto-SemiBold"
 				WinPhone="/Assets/Fonts/Roboto-SemiBold.ttf#Roboto"/>
 
 			<OnPlatform 
 				x:Key="FiraSansBold"
 				x:TypeArguments="x:String"
 				Android="FiraSans-Bold.ttf#Fira Sans"
+                iOS="FiraSans-Bold"
 				WinPhone="/Assets/Fonts/FiraSans-Bold.ttf#Fira Sans"/>
 
 			<OnPlatform
 				x:Key="FiraSansSemiBold"
 				x:TypeArguments="x:String"
 				Android="FiraSans-SemiBold.ttf#Fira Sans"
+                iOS="FiraSans-SemiBold"
 				WinPhone="/Assets/Fonts/FiraSans-SemiBold.ttf#Fira Sans"/>
 
 			<OnPlatform 
 				x:Key="FiraSansRegular"
 				x:TypeArguments="x:String"
 				Android="FiraSans-Regular.ttf#Fira Sans"
+                iOS="FiraSans-Regular"
 				WinPhone="/Assets/Fonts/FiraSans-Regular.ttf#Fira Sans"/>
 
 			<OnPlatform 
 				x:Key="LittleSize"
 				x:TypeArguments="x:Double"
 				Android="12"
+                iOS="11"
 				WinPhone="12"/>
 
 			<OnPlatform 
 				x:Key="MidMediumSize"
 				x:TypeArguments="x:Double"
 				Android="14"
+                iOS="12"
 				WinPhone="14"/>
 
 			<OnPlatform 
 				x:Key="MediumSize"
 				x:TypeArguments="x:Double"
 				Android="16"
+                iOS="14"
 				WinPhone="16"/>
 
 			<OnPlatform 
 				x:Key="LargeSize"
 				x:TypeArguments="x:Double"
 				Android="18"
+                iOS="16"
 				WinPhone="18"/>
 
 			<OnPlatform 
 				x:Key="LargerSize"
 				x:TypeArguments="x:Double"
 				Android="20"
+                iOS="18"
 				WinPhone="20"/>
 
 			<OnPlatform 
 				x:Key="BigSize"
 				x:TypeArguments="x:Double"
 				Android="24"
+                iOS="20"
 				WinPhone="24"/>
 
 			<OnPlatform 
 				x:Key="ExtraBigSize"
 				x:TypeArguments="x:Double"
 				Android="32"
+                iOS="24"
 				WinPhone="32"/>
 
 			<OnPlatform 
 				x:Key="HugeSize"
 				x:TypeArguments="x:Double"
 				Android="48"
+                iOS="32"
 				WinPhone="48"/>
 
 			<!-- Стили -->
@@ -232,7 +248,7 @@
 				<Setter Property="WidthRequest">
 					<Setter.Value>
 						<OnPlatform x:TypeArguments="x:Double">
-							<On Platform="Android" Value="100" />
+							<On Platform="Android, iOS" Value="100" />
 							<On Platform="UWP" Value="300" />
 						</OnPlatform>
 					</Setter.Value>
