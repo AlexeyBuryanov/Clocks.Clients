@@ -45,7 +45,7 @@
                 <Setter Property="Margin" >
                     <Setter.Value>
                         <OnPlatform x:TypeArguments="Thickness">
-                            <On Platform="Android" Value="5, 0, 0, 0" />
+                            <On Platform="Android, iOS" Value="5, 0, 0, 0" />
                         </OnPlatform>
                     </Setter.Value>
                 </Setter>
@@ -61,7 +61,7 @@
                 <Setter Property="Margin" >
                     <Setter.Value>
                         <OnPlatform x:TypeArguments="Thickness">
-                            <On Platform="Android" Value="0, -3, 5, 0" />
+                            <On Platform="Android, iOS" Value="0, -3, 5, 0" />
                         </OnPlatform>
                     </Setter.Value>
                 </Setter>
@@ -118,7 +118,7 @@
                     Aspect="AspectFill">
                     <ffimageloading:CachedImage.Source>
                         <OnPlatform x:TypeArguments="ImageSource">
-                            <On Platform="Android" Value="img_header_background_1" />
+                            <On Platform="Android, iOS" Value="img_header_background_1" />
                             <On Platform="UWP" Value="Assets/img_header_background_2.png" />
                         </OnPlatform>
                     </ffimageloading:CachedImage.Source>
@@ -147,7 +147,7 @@
                             Style="{StaticResource LogoStyle}">
                             <Image.Source>
                                 <OnPlatform x:TypeArguments="ImageSource">
-                                    <On Platform="Android" Value="logo_splash" />
+                                    <On Platform="Android, iOS" Value="logo_splash" />
                                     <On Platform="UWP" Value="Assets/logo_splash.png" />
                                 </OnPlatform>
                             </Image.Source>
@@ -316,7 +316,7 @@
                     Margin="38, -40, 38, 0">
                     <StackLayout.Spacing>
                         <OnPlatform x:TypeArguments="x:Double">
-                            <On Platform="Android" Value="1" />
+                            <On Platform="Android, iOS" Value="1" />
                             <On Platform="UWP" Value="8" />
                         </OnPlatform>
                     </StackLayout.Spacing>
