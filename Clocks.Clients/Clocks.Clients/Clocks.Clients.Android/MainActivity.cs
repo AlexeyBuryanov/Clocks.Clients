@@ -5,6 +5,12 @@ using Android.Util;
 using Android.Views;
 using Clocks.Clients.Core;
 using Clocks.Clients.Core.Helpers;
+using Clocks.Clients.Core.Models.Database;
+using Clocks.Clients.Core.Services.Authentication;
+using Clocks.Clients.Core.Services.DismissKeyboard;
+using Clocks.Clients.Droid.Database;
+using Clocks.Clients.Droid.Services.Authentication;
+using Clocks.Clients.Droid.Services.DismissKeyboard;
 using Prism;
 using Prism.Ioc;
 using Xamarin.Forms;
@@ -34,8 +40,14 @@ namespace Clocks.Clients.Droid
             Acr.UserDialogs.UserDialogs.Init(this);
             Rg.Plugins.Popup.Popup.Init(this, bundle);
             InitMessageCenterSubscriptions();
+            InitXamanimation();
             LoadApplication(new App(new AndroidInitializer()));
             MakeStatusBarTranslucent(false);
+        }
+
+        private static void InitXamanimation()
+        {
+            var t1 = typeof(Xamanimation.AnimationBase);
         }
 
         /// <summary>
@@ -107,7 +119,9 @@ namespace Clocks.Clients.Droid
     {
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            // Register any platform specific implementations
+            containerRegistry.RegisterSingleton(typeof(IPath), typeof(AndroidDbPath));
+            containerRegistry.RegisterSingleton(typeof(IBrowserCookiesService), typeof(BrowserCookiesService));
+            containerRegistry.RegisterSingleton(typeof(IDismissKeyboardService), typeof(DismissKeyboardService));
         }
     }
 }
