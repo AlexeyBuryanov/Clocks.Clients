@@ -16,6 +16,7 @@ using Prism.Plugin.Popups;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Device = Xamarin.Forms.Device;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace Clocks.Clients.Core
@@ -59,6 +60,11 @@ namespace Clocks.Clients.Core
         {
             _uow = UnitOfWork.Instance;
 
+            if (Device.RuntimePlatform == Device.iOS)
+            {
+                SQLitePCL.Batteries.Init();
+            }
+            
             // Создаем бд, если она отсутствует
             await _uow.EnsureCreatedAsync();
 
