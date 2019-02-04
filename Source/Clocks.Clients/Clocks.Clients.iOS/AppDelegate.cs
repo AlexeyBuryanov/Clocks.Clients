@@ -25,13 +25,6 @@ namespace Clocks.Clients.iOS
 
             base.FinishedLaunching(app, options);
 
-            UINavigationBar.Appearance.SetBackgroundImage(new UIImage(), UIBarMetrics.Default);
-            UINavigationBar.Appearance.ShadowImage = new UIImage();
-            UINavigationBar.Appearance.BackgroundColor = UIColor.Clear;
-            UINavigationBar.Appearance.TintColor = UIColor.White;
-            UINavigationBar.Appearance.BarTintColor = UIColor.Clear;
-            UINavigationBar.Appearance.Translucent = true;
-
             return true;
         }
 
