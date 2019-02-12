@@ -1,7 +1,7 @@
-﻿using Clocks.Clients.Droid.Database;
+using Clocks.Clients.Core.Models.Database;
+using Clocks.Clients.Droid.Database;
 using System;
 using System.IO;
-using Clocks.Clients.Core.Models.Database;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(AndroidDbPath))]
@@ -11,7 +11,8 @@ namespace Clocks.Clients.Droid.Database
     {
         public string GetDatabasePath(string filename)
         {
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), filename);
+            var path = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            return Path.Combine(path, filename);
         }
     }
 }
