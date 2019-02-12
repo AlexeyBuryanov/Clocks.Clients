@@ -1,4 +1,4 @@
-﻿using Clocks.Clients.Core.Models.Database;
+using Clocks.Clients.Core.Models.Database;
 using Clocks.Clients.UWP.Database;
 using System.IO;
 using Windows.Storage;
@@ -9,9 +9,10 @@ namespace Clocks.Clients.UWP.Database
 {
     public class UwpDbPath : IPath
     {
-        public string GetDatabasePath(string sqliteFilename)
+        public string GetDatabasePath(string filename)
         {
-            return Path.Combine(ApplicationData.Current.LocalFolder.Path, sqliteFilename);
+            var path = ApplicationData.Current.LocalFolder.Path;
+            return Path.Combine(path, filename);
         }
     }
 }
